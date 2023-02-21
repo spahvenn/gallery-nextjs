@@ -1,24 +1,40 @@
-import * as React from "react";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
+import { PagePreviewBox } from "../components/PagePreviewBox";
+import { BasicLayout } from "../components/Layout/Layout";
+import FrontPageCarousel from "../components/FrontPageCarousel/FrontPageCarousel";
+import { pagePreviews } from "../utils/utils";
 
-export default function Home() {
+function FrontPage() {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Material UI - Next.js example in TypeScript
-        </Typography>
-      </Box>
-    </Container>
+    <BasicLayout>
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sx={(theme) => ({
+            [theme.breakpoints.only("xs")]: {
+              marginTop: -1.5,
+              marginBottom: -1.5,
+            },
+          })}
+        >
+          <FrontPageCarousel />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <PagePreviewBox pagePreviewInfo={pagePreviews.spring} />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <PagePreviewBox pagePreviewInfo={pagePreviews.summer} />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <PagePreviewBox pagePreviewInfo={pagePreviews.autumn} />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={3}>
+          <PagePreviewBox pagePreviewInfo={pagePreviews.winter} />
+        </Grid>
+      </Grid>
+    </BasicLayout>
   );
 }
+
+export default FrontPage;

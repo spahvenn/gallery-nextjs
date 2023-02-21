@@ -1,11 +1,13 @@
 import * as React from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
-import { ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import theme from "../../utils/theme";
-import createEmotionCache from "../../utils/createEmotionCache";
+import createEmotionCache from "../utils/createEmotionCache";
+import { useMemo } from "react";
+import { ShoppingCartProvider } from "../context/ShoppingCartContext";
+import { GeneralProvider, useGeneral } from "../context/GeneralContext";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -14,8 +16,18 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function MyApp(props: MyAppProps) {
+function App(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { uiMode } = useGeneral();
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: uiMode,
+        },
+      }),
+    [uiMode]
+  );
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -27,5 +39,15 @@ export default function MyApp(props: MyAppProps) {
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
+  );
+}
+
+export default function MyApp(props: MyAppProps) {
+  return (
+    <GeneralProvider>
+      <ShoppingCartProvider>
+        <App {...props} />
+      </ShoppingCartProvider>
+    </GeneralProvider>
   );
 }
