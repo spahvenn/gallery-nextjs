@@ -8,6 +8,9 @@ import createEmotionCache from "../utils/createEmotionCache";
 import { useMemo } from "react";
 import { ShoppingCartProvider } from "../context/ShoppingCartContext";
 import { GeneralProvider, useGeneral } from "../context/GeneralContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "@/styles/index.css";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -36,6 +39,7 @@ function App(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <ToastContainer theme={theme.palette.mode} />
         <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
