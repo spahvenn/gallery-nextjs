@@ -1,26 +1,32 @@
-import { CardMedia } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 import { CarouselItem } from "../../utils/utils";
 
 export function CarouselImage({
   carouselItem,
-  isMobile = false,
 }: {
   carouselItem: CarouselItem;
-  isMobile?: boolean;
 }) {
   return (
     <Link href={"/gallery?season=" + carouselItem.season}>
-      <CardMedia
-        sx={{
+      <Image
+        src={carouselItem.src}
+        alt={carouselItem.season}
+        width={4032}
+        height={2268}
+        sizes="
+        (max-width: 1200px) 100vw,
+        1200px      
+        "
+        style={{
           display: "block",
           height: "100%",
+          width: "100%",
+          objectFit: "cover",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
         }}
-        component="img"
-        image={isMobile ? carouselItem.srcSmall : carouselItem.src}
       />
     </Link>
   );

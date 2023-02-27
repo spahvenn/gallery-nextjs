@@ -1,6 +1,5 @@
 import {
   Box,
-  CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,8 +9,9 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddRemoveShoppingCartButton from "./AddRemoveShoppingCartButton";
-import { useDialogImageMinHeight, useImageSrc } from "../../utils/utils";
-import { Image } from "@/src/types/types";
+import { useDialogImageMinHeight } from "../../utils/utils";
+import { Image as ImageType } from "@/src/types/types";
+import Image from "next/image";
 
 const StyledPictureDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -31,13 +31,12 @@ const StyledPictureDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 interface Props {
-  img: Image;
+  img: ImageType;
   closeDialog: () => void;
 }
 
 const ImageDialog = ({ img, closeDialog, open }: Props & DialogProps) => {
   const dialogPictureMinHeight = useDialogImageMinHeight();
-  const pictureSrc = useImageSrc(img);
   return (
     <StyledPictureDialog
       open={open}
@@ -58,11 +57,18 @@ const ImageDialog = ({ img, closeDialog, open }: Props & DialogProps) => {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <CardMedia
-            component="img"
-            src={pictureSrc}
-            sx={{
+          <Image
+            src={img.src}
+            alt={"Dialog image"}
+            width={4032}
+            height={2268}
+            sizes="
+                  (max-width: 600px) 567px,
+                  884px      
+                  "
+            style={{
               width: "100%",
+              height: "100%",
               display: "block",
               minHeight: dialogPictureMinHeight,
             }}

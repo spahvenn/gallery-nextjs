@@ -6,6 +6,7 @@ import { BasicLayout } from "../components/Layout/Layout";
 import { showInfoMsg } from "../utils/toast";
 import { emptyImageValue, getImageById } from "../utils/utils";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import Image from "next/image";
 
 const ShoppingCartPage = () => {
   const { itemIds } = useShoppingCart();
@@ -36,15 +37,19 @@ const ShoppingCartPage = () => {
               {itemIds.map((itemId) => {
                 return (
                   <Grid key={itemId} item xs={6} sm={4} md={3}>
-                    <img
+                    <Image
+                      src={getImageById(itemId).src}
+                      alt={"Shopping cart item"}
+                      width={4032}
+                      height={2268}
+                      onClick={() => setDialogPicture(getImageById(itemId))}
+                      sizes="282px"
                       style={{
                         width: "100%",
+                        height: "100%",
                         display: "block",
                         cursor: "pointer",
                       }}
-                      alt={"Shopping cart item"}
-                      src={getImageById(itemId).srcSmall}
-                      onClick={() => setDialogPicture(getImageById(itemId))}
                     />
                   </Grid>
                 );

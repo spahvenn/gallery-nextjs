@@ -4,13 +4,24 @@ import { Layout } from "../components/Layout/Layout";
 import { emptyImageValue, imageBank } from "../utils/utils";
 import SeasonSelector from "../components/GalleryPage/SeasonSelector";
 import ImageDialog from "../components/GalleryPage/ImageDialog";
-import { Box, CardMedia, Grid } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
 import { useRouter } from "next/router";
-import { Image } from "@/src/types/types";
+import { Image as ImageType } from "@/src/types/types";
+import Image from "next/image";
+
+const StyledImage = styled(Image)(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  display: "block",
+  cursor: "pointer",
+  transition: "transform 0.5s ease",
+  ":hover": { transform: "scale(1.2)" },
+}));
 
 export default function GalleryPage() {
   const [selectedSeason, setSelectedSeason] = useState("all");
-  const [dialogPicture, setDialogPicture] = useState<Image>(emptyImageValue);
+  const [dialogPicture, setDialogPicture] =
+    useState<ImageType>(emptyImageValue);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +41,7 @@ export default function GalleryPage() {
     }
   }, []);
 
-  function openPictureDialog(image: Image) {
+  function openPictureDialog(image: ImageType) {
     router.push(
       router.pathname +
         "?season=" +
@@ -63,17 +74,18 @@ export default function GalleryPage() {
                   overflow: "hidden",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    width: "100%",
-                    display: "block",
-                    cursor: "pointer",
-                    transition: "transform 0.5s ease",
-                    ":hover": { transform: "scale(1.2)" },
-                  }}
-                  src={image.srcSmall}
+                <StyledImage
+                  src={image.src}
+                  alt={selectedSeason}
+                  width={4032}
+                  height={2268}
                   onClick={() => openPictureDialog(image)}
+                  sizes="
+                  (max-width: 600px) 100vw,
+                  (max-width: 900px) 50vw,
+                  (max-width: 1200px) 33vw,
+                  25vw      
+                  "
                 />
               </Box>
             </Grid>

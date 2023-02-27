@@ -31,7 +31,7 @@ export function DesktopCarouselContainer({
             {carouselItems.map((carouselItem) => {
               return (
                 <Box key={carouselItem.season} height="400px">
-                  <CarouselImage carouselItem={carouselItem}></CarouselImage>
+                  <CarouselImage carouselItem={carouselItem} />
                 </Box>
               );
             })}
@@ -93,7 +93,7 @@ export function MobileCarouselContainer({
         {carouselItems.map((carouselItem) => {
           return (
             <Box key={carouselItem.season}>
-              <CarouselImage carouselItem={carouselItem} isMobile={true} />
+              <CarouselImage carouselItem={carouselItem} />
             </Box>
           );
         })}
