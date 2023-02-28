@@ -1,5 +1,12 @@
 import { ActionMap } from "@/src/types/types";
-import { createContext, Dispatch, useContext, useReducer } from "react";
+import {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 interface ShoppingCartContextValue {
   itemIds: number[];
@@ -8,6 +15,7 @@ interface ShoppingCartContextValue {
 export enum ShoppingCartTypes {
   ADD = "ADD",
   REMOVE = "REMOVE",
+  INITIALIZE = "INITIALIZE",
 }
 
 type ShoppingCartPayload = {
@@ -17,9 +25,12 @@ type ShoppingCartPayload = {
   [ShoppingCartTypes.REMOVE]: {
     itemId: number;
   };
+  [ShoppingCartTypes.INITIALIZE]: {
+    value: ShoppingCartContextValue;
+  };
 };
 
-export type GeneralActions =
+export type ShoppingCartActions =
   ActionMap<ShoppingCartPayload>[keyof ActionMap<ShoppingCartPayload>];
 
 interface ShoppingCartStore {
@@ -31,7 +42,7 @@ const initialState: ShoppingCartStore = { itemIds: [] };
 export const ShoppingCartContext =
   createContext<ShoppingCartContextValue>(initialState);
 export const ShoppingCartDispatchContext = createContext<
-  Dispatch<GeneralActions>
+  Dispatch<ShoppingCartActions>
 >(() => null);
 
 export function ShoppingCartProvider({
@@ -40,6 +51,22 @@ export function ShoppingCartProvider({
   children: React.ReactNode;
 }) {
   const [store, dispatch] = useReducer(ShoppingCartReducer, initialState);
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    if (firstRender) {
+      const initialValue = localStorage.getItem("shoppingCart")
+        ? JSON.parse(localStorage.getItem("shoppingCart") as string)
+        : { itemIds: [] };
+      dispatch({
+        type: ShoppingCartTypes.INITIALIZE,
+        payload: { value: initialValue },
+      });
+      setFirstRender(false);
+    } else {
+      localStorage.setItem("shoppingCart", JSON.stringify(store));
+    }
+  }, [store.itemIds]);
 
   return (
     <ShoppingCartContext.Provider value={store}>
@@ -50,7 +77,10 @@ export function ShoppingCartProvider({
   );
 }
 
-function ShoppingCartReducer(store: ShoppingCartStore, action: GeneralActions) {
+function ShoppingCartReducer(
+  store: ShoppingCartStore,
+  action: ShoppingCartActions
+) {
   switch (action.type) {
     case ShoppingCartTypes.ADD: {
       return { ...store, itemIds: [...store.itemIds, action.payload.itemId] };
@@ -58,13 +88,17 @@ function ShoppingCartReducer(store: ShoppingCartStore, action: GeneralActions) {
     case ShoppingCartTypes.REMOVE: {
       return {
         ...store,
-        itemIds: { ...store.itemIds }.filter(
+        itemIds: [...store.itemIds].filter(
           (itemId) => itemId !== action.payload.itemId
         ),
       };
     }
+    case ShoppingCartTypes.INITIALIZE: {
+      return action.payload.value;
+    }
   }
 }
+
 
 export function useShoppingCart() {
   return useContext(ShoppingCartContext);
