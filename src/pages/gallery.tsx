@@ -39,7 +39,7 @@ export default function GalleryPage() {
         setDialogPicture(picture);
       }
     }
-  }, []);
+  }, [router.query]);
 
   function openPictureDialog(image: ImageType) {
     router.push(
@@ -55,6 +55,10 @@ export default function GalleryPage() {
   function closePictureDialog() {
     router.push(router.pathname + "?season=" + router.query.season);
     setDialogPicture(emptyImageValue);
+  }
+
+  if (!router.query.season) {
+    return null;
   }
 
   return (
@@ -92,12 +96,14 @@ export default function GalleryPage() {
           );
         })}
       </Grid>
-      <ImageDialog
-        open={dialogPicture.id !== 0}
-        onClose={closePictureDialog}
-        img={dialogPicture}
-        closeDialog={closePictureDialog}
-      />
+      {dialogPicture.id !== 0 && (
+        <ImageDialog
+          open={dialogPicture.id !== 0}
+          onClose={closePictureDialog}
+          img={dialogPicture}
+          closeDialog={closePictureDialog}
+        />
+      )}
     </Layout>
   );
 }

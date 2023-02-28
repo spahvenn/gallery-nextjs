@@ -12,5 +12,4 @@ export type ActionMap<M extends { [index: string]: any }> = {
 export interface Image {
   id: number;
   src: string;
-  srcSmall: string;
 }
