@@ -11,6 +11,7 @@ import { GeneralProvider, useGeneral } from "../context/GeneralContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "@/styles/index.css";
+import Script from "next/script";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -21,7 +22,7 @@ interface MyAppProps extends AppProps {
 
 function App(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  const { uiMode } = useGeneral();
+  const { uiMode, hydrated } = useGeneral();
   const theme = useMemo(
     () =>
       createTheme({
@@ -31,16 +32,20 @@ function App(props: MyAppProps) {
       }),
     [uiMode]
   );
+
+  // Solution?
+  // https://medium.com/@luca_79189/how-to-get-a-flickerless-persistent-dark-mode-in-your-next-js-app-example-with-mui-9581ea898314
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
+      <Script src="/theme.js" strategy="beforeInteractive" />
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <ToastContainer theme={theme.palette.mode} />
-        <Component {...pageProps} />
+        {hydrated && <Component {...pageProps} />}
       </ThemeProvider>
     </CacheProvider>
   );

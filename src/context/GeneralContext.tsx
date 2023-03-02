@@ -1,24 +1,36 @@
 import { ActionMap } from "@/src/types/types";
-import { createContext, Dispatch, useContext, useReducer } from "react";
+import {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 interface GeneralContextValue {
   uiMode: "light" | "dark";
+  hydrated: boolean;
 }
 
 export enum GeneralTypes {
-  setUIMode = "SET_UI_MODE",
+  SET_UI_MODE = "SET_UI_MODE",
+  INITIALIZE = "INITIALIZE",
 }
 
 type GeneralPayload = {
-  [GeneralTypes.setUIMode]: {
+  [GeneralTypes.SET_UI_MODE]: {
     mode: "light" | "dark";
+  };
+  [GeneralTypes.INITIALIZE]: {
+    value: GeneralContextValue;
   };
 };
 
 export type GeneralActions =
   ActionMap<GeneralPayload>[keyof ActionMap<GeneralPayload>];
 
-const initialState: GeneralContextValue = { uiMode: "light" };
+const initialState: GeneralContextValue = { uiMode: "light", hydrated: false };
 
 export const GeneralContext = createContext<GeneralContextValue>(initialState);
 export const GeneralDispatchContext = createContext<Dispatch<GeneralActions>>(
@@ -27,6 +39,19 @@ export const GeneralDispatchContext = createContext<Dispatch<GeneralActions>>(
 
 export function GeneralProvider({ children }: { children: React.ReactNode }) {
   const [store, dispatch] = useReducer(GeneralReducer, initialState);
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    if (firstRender) {
+      const initial = localStorage.getItem("general")
+        ? JSON.parse(localStorage.getItem("general") as string)
+        : initialState;
+      setFirstRender(false);
+      dispatch({ type: GeneralTypes.INITIALIZE, payload: { value: initial } });
+    } else {
+      localStorage.setItem("general", JSON.stringify(store));
+    }
+  }, [store]);
 
   return (
     <GeneralContext.Provider value={store}>
@@ -39,8 +64,11 @@ export function GeneralProvider({ children }: { children: React.ReactNode }) {
 
 function GeneralReducer(store: GeneralContextValue, action: GeneralActions) {
   switch (action.type) {
-    case GeneralTypes.setUIMode: {
+    case GeneralTypes.SET_UI_MODE: {
       return { ...store, uiMode: action.payload.mode };
+    }
+    case GeneralTypes.INITIALIZE: {
+      return { ...action.payload.value, hydrated: true };
     }
   }
 }

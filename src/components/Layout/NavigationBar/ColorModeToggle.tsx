@@ -16,7 +16,7 @@ const ColorModeToggle = () => {
         checked={uiMode === "dark"}
         onChange={() =>
           dispatch({
-            type: GeneralTypes.setUIMode,
+            type: GeneralTypes.SET_UI_MODE,
             payload: { mode: uiMode === "dark" ? "light" : "dark" },
           })
         }
