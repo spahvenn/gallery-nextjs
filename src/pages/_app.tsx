@@ -22,7 +22,7 @@ interface MyAppProps extends AppProps {
 
 function App(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  const { uiMode, hydrated } = useGeneral();
+  const { uiMode } = useGeneral();
   const theme = useMemo(
     () =>
       createTheme({
@@ -45,7 +45,7 @@ function App(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ToastContainer theme={theme.palette.mode} />
-        {hydrated && <Component {...pageProps} />}
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   );
