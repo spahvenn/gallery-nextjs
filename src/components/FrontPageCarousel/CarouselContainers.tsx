@@ -28,10 +28,13 @@ export function DesktopCarouselContainer({
             onChange={onChange}
             indicatorContainerProps={indicatorContainerProps}
           >
-            {carouselItems.map((carouselItem) => {
+            {carouselItems.map((carouselItem, index) => {
               return (
                 <Box key={carouselItem.season} height="400px">
-                  <CarouselImage carouselItem={carouselItem} />
+                  <CarouselImage
+                    carouselItem={carouselItem}
+                    priority={index === 0}
+                  />
                 </Box>
               );
             })}
@@ -90,10 +93,13 @@ export function MobileCarouselContainer({
         sx={{ mr: -2, ml: -2 }}
         indicatorContainerProps={indicatorContainerProps}
       >
-        {carouselItems.map((carouselItem) => {
+        {carouselItems.map((carouselItem, index) => {
           return (
             <Box key={carouselItem.season}>
-              <CarouselImage carouselItem={carouselItem} />
+              <CarouselImage
+                carouselItem={carouselItem}
+                priority={index === 0}
+              />
             </Box>
           );
         })}

@@ -4,8 +4,10 @@ import { CarouselItem } from "../../utils/utils";
 
 export function CarouselImage({
   carouselItem,
+  priority,
 }: {
   carouselItem: CarouselItem;
+  priority: boolean;
 }) {
   return (
     <Link href={"/gallery?season=" + carouselItem.season}>
@@ -18,6 +20,7 @@ export function CarouselImage({
         (max-width: 1200px) 100vw,
         1200px      
         "
+        priority={priority}
         style={{
           display: "block",
           height: "100%",

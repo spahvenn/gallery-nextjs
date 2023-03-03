@@ -21,7 +21,7 @@ function FrontPage() {
           <FrontPageCarousel />
         </Grid>
         <Grid item xs={12} sm={6} lg={3}>
-          <PagePreviewBox pagePreviewInfo={pagePreviews.spring} />
+          <PagePreviewBox pagePreviewInfo={pagePreviews.spring} priority />
         </Grid>
         <Grid item xs={12} sm={6} lg={3}>
           <PagePreviewBox pagePreviewInfo={pagePreviews.summer} />

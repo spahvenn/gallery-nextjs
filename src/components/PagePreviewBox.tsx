@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
+  priority?: boolean;
   pagePreviewInfo: {
     src: string;
     title: string;
@@ -11,7 +12,7 @@ interface Props {
   };
 }
 
-export function PagePreviewBox({ pagePreviewInfo }: Props) {
+export function PagePreviewBox({ pagePreviewInfo, priority }: Props) {
   const { src, title, description, btnUrl } = pagePreviewInfo;
   return (
     <Box mb={{ md: 2, lg: 0 }}>
@@ -21,11 +22,11 @@ export function PagePreviewBox({ pagePreviewInfo }: Props) {
           src={src}
           width={4032}
           height={2268}
-          layout="responsive"
-          sizes="
-          (max-width: 900px) 570px,
-          270px      
-          "
+          priority={priority}
+          sizes="(max-width: 600px) 100vw, 
+                (max-width: 1200px) 50vw,
+                25vw"
+          style={{ width: "100%", height: "100%" }}
         />
       </Link>
       <Typography variant="h5" mt={0.5} mb={0.5}>
