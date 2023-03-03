@@ -3,10 +3,14 @@ import { PagePreviewBox } from "../components/PagePreviewBox";
 import { BasicLayout } from "../components/Layout/Layout";
 import FrontPageCarousel from "../components/FrontPageCarousel/FrontPageCarousel";
 import { pagePreviews } from "../utils/utils";
+import Head from "next/head";
 
 function FrontPage() {
   return (
     <BasicLayout>
+      <Head>
+        <title>Gallery | The best seasonal images |</title>
+      </Head>
       <Grid container spacing={3}>
         <Grid
           item
