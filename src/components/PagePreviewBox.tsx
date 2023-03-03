@@ -23,9 +23,9 @@ export function PagePreviewBox({ pagePreviewInfo, priority }: Props) {
           width={4032}
           height={2268}
           priority={priority}
-          sizes="(max-width: 600px) 100vw, 
-                (max-width: 1200px) 50vw,
-                25vw"
+          sizes="(max-width: 599px) 100vw, 
+                (max-width: 1199px) 50vw,
+                270px"
           style={{ width: "100%", height: "100%" }}
         />
       </Link>

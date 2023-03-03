@@ -17,8 +17,10 @@ export function CarouselImage({
         width={4032}
         height={2268}
         sizes="
-        (max-width: 1200px) 100vw,
-        1200px      
+        (max-width: 599px) 58vw,
+        (max-width: 899px) 66vw,
+        (max-width: 1199px) 75vw,
+        864px      
         "
         priority={priority}
         style={{
