@@ -10,6 +10,10 @@ function FrontPage() {
     <BasicLayout>
       <Head>
         <title>Gallery | The best seasonal images |</title>
+        <meta
+          name="description"
+          content="Check out the best seasonal images for all uses: spring, summer, autumn and winter."
+        />
       </Head>
       <Grid container spacing={3}>
         <Grid
