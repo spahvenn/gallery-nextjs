@@ -7,7 +7,7 @@ export function CarouselImage({
   priority,
 }: {
   carouselItem: CarouselItem;
-  priority: boolean;
+  priority?: boolean;
 }) {
   return (
     <Link href={"/gallery?season=" + carouselItem.season}>

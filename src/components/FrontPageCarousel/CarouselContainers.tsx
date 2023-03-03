@@ -4,6 +4,7 @@ import Carousel from "react-material-ui-carousel";
 import { CallToActionButton } from "./CallToActionButton";
 import { CarouselItem } from "../../utils/utils";
 import { CarouselNavProps } from "react-material-ui-carousel/dist/components/types";
+import { useEffect, useState } from "react";
 
 interface CarouselContainerProps {
   carouselItems: CarouselItem[];
@@ -20,25 +21,38 @@ export function DesktopCarouselContainer({
   onChange,
   currentImageIndex,
 }: CarouselContainerProps) {
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
   return (
     <Box>
       <Grid container>
         <Grid item xs={7} sm={8} md={9}>
-          <Carousel
-            onChange={onChange}
-            indicatorContainerProps={indicatorContainerProps}
-          >
-            {carouselItems.map((carouselItem, index) => {
-              return (
-                <Box key={carouselItem.season} height="400px">
-                  <CarouselImage
-                    carouselItem={carouselItem}
-                    priority={index === 0}
-                  />
-                </Box>
-              );
-            })}
-          </Carousel>
+          {firstRender && (
+            <Box height="400px">
+              <CarouselImage carouselItem={carouselItems[0]} />
+            </Box>
+          )}
+          {!firstRender && (
+            <Carousel
+              onChange={onChange}
+              indicatorContainerProps={indicatorContainerProps}
+            >
+              {carouselItems.map((carouselItem, index) => {
+                return (
+                  <Box key={carouselItem.season} height="400px">
+                    <CarouselImage
+                      carouselItem={carouselItem}
+                      priority={index === 0}
+                    />
+                  </Box>
+                );
+              })}
+            </Carousel>
+          )}
         </Grid>
         <Grid
           item
@@ -85,25 +99,38 @@ export function MobileCarouselContainer({
   onChange,
   currentImageIndex,
 }: CarouselContainerProps) {
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
   return (
     <Box>
-      <Carousel
-        onChange={onChange}
-        indicators={true}
-        sx={{ mr: -2, ml: -2 }}
-        indicatorContainerProps={indicatorContainerProps}
-      >
-        {carouselItems.map((carouselItem, index) => {
-          return (
-            <Box key={carouselItem.season}>
-              <CarouselImage
-                carouselItem={carouselItem}
-                priority={index === 0}
-              />
-            </Box>
-          );
-        })}
-      </Carousel>
+      {firstRender && (
+        <Box height="400px">
+          <CarouselImage carouselItem={carouselItems[0]} />
+        </Box>
+      )}
+      {!firstRender && (
+        <Carousel
+          onChange={onChange}
+          indicators={true}
+          sx={{ mr: -2, ml: -2 }}
+          indicatorContainerProps={indicatorContainerProps}
+        >
+          {carouselItems.map((carouselItem, index) => {
+            return (
+              <Box key={carouselItem.season}>
+                <CarouselImage
+                  carouselItem={carouselItem}
+                  priority={index === 0}
+                />
+              </Box>
+            );
+          })}
+        </Carousel>
+      )}
       <Box
         mr={-2}
         ml={-2}
