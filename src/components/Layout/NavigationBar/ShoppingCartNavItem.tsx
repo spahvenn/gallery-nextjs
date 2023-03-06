@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
 import { useShoppingCart } from "@/src/context/ShoppingCartContext";
+import { visuallyHidden } from "@mui/utils";
 
 const ShoppingCartNavItem = () => {
   const { itemIds } = useShoppingCart();
@@ -16,6 +17,9 @@ const ShoppingCartNavItem = () => {
                 : theme.palette.primary.contrastText,
           })}
         />
+        <Box component="span" sx={visuallyHidden}>
+          Shopping Cart Icon
+        </Box>
       </Link>
       <Box sx={{ position: "relative" }}>
         <Typography
