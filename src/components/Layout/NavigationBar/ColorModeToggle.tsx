@@ -12,6 +12,7 @@ const ColorModeToggle = () => {
     <>
       <FormGroup>
         <FormControlLabel
+          sx={{ marginLeft: 0 }}
           control={
             <Switch
               sx={{ marginRight: 1.5 }}
