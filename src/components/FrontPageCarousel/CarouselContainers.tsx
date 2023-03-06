@@ -33,7 +33,7 @@ export function DesktopCarouselContainer({
         <Grid item xs={7} sm={8} md={9}>
           {firstRender && (
             <Box height="400px">
-              <CarouselImage carouselItem={carouselItems[0]} />
+              <CarouselImage carouselItem={carouselItems[0]} priority />
             </Box>
           )}
           {!firstRender && (
@@ -109,7 +109,7 @@ export function MobileCarouselContainer({
     <Box>
       {firstRender && (
         <Box sx={{ mr: -2, ml: -2 }}>
-          <CarouselImage carouselItem={carouselItems[0]} />
+          <CarouselImage carouselItem={carouselItems[0]} priority />
         </Box>
       )}
       {!firstRender && (
