@@ -31,28 +31,28 @@ export function DesktopCarouselContainer({
     <Box>
       <Grid container>
         <Grid item xs={7} sm={8} md={9}>
-          {firstRender && (
-            <Box height="400px">
+          <Box height="400px">
+            {firstRender && (
               <CarouselImage carouselItem={carouselItems[0]} priority />
-            </Box>
-          )}
-          {!firstRender && (
-            <Carousel
-              onChange={onChange}
-              indicatorContainerProps={indicatorContainerProps}
-            >
-              {carouselItems.map((carouselItem, index) => {
-                return (
-                  <Box key={carouselItem.season} height="400px">
-                    <CarouselImage
-                      carouselItem={carouselItem}
-                      priority={index === 0}
-                    />
-                  </Box>
-                );
-              })}
-            </Carousel>
-          )}
+            )}
+            {!firstRender && (
+              <Carousel
+                onChange={onChange}
+                indicatorContainerProps={indicatorContainerProps}
+              >
+                {carouselItems.map((carouselItem, index) => {
+                  return (
+                    <Box key={carouselItem.season} height="400px">
+                      <CarouselImage
+                        carouselItem={carouselItem}
+                        priority={index === 0}
+                      />
+                    </Box>
+                  );
+                })}
+              </Carousel>
+            )}
+          </Box>
         </Grid>
         <Grid
           item
