@@ -108,7 +108,7 @@ export function MobileCarouselContainer({
   return (
     <Box>
       {firstRender && (
-        <Box height="400px">
+        <Box sx={{ mr: -2, ml: -2 }}>
           <CarouselImage carouselItem={carouselItems[0]} />
         </Box>
       )}

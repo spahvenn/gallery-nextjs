@@ -1,9 +1,16 @@
-import { Grid } from "@mui/material";
+import { Grid, styled } from "@mui/material";
 import { PagePreviewBox } from "../components/PagePreviewBox";
 import { BasicLayout } from "../components/Layout/Layout";
 import FrontPageCarousel from "../components/FrontPageCarousel/FrontPageCarousel";
 import { pagePreviews } from "../utils/utils";
 import Head from "next/head";
+
+const CarouselGrid = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.only("xs")]: {
+    marginTop: theme.spacing(-1.5),
+    marginBottom: theme.spacing(-1.5),
+  },
+}));
 
 function FrontPage() {
   return (
@@ -16,18 +23,9 @@ function FrontPage() {
         />
       </Head>
       <Grid container spacing={3}>
-        <Grid
-          item
-          xs={12}
-          sx={(theme) => ({
-            [theme.breakpoints.only("xs")]: {
-              marginTop: -1.5,
-              marginBottom: -1.5,
-            },
-          })}
-        >
+        <CarouselGrid item xs={12}>
           <FrontPageCarousel />
-        </Grid>
+        </CarouselGrid>
         <Grid item xs={12} sm={6} lg={3}>
           <PagePreviewBox pagePreviewInfo={pagePreviews.spring} priority />
         </Grid>
