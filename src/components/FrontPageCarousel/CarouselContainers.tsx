@@ -33,6 +33,7 @@ export function DesktopCarouselContainer({
         <Grid item xs={7} sm={8} md={9}>
           <Box height="400px">
             {firstRender && (
+              /* Placeholder for static site generation */
               <CarouselImage carouselItem={carouselItems[0]} priority />
             )}
             {!firstRender && (
@@ -101,20 +102,20 @@ export function MobileCarouselContainer({
 }: CarouselContainerProps) {
   const [firstRender, setFirstRender] = useState(true);
 
-  useEffect(() => {
-    setFirstRender(false);
-  }, []);
-
   return (
     <Box>
       {firstRender && (
+        /* Placeholder for static site generation */
         <Box sx={{ mr: -2, ml: -2 }}>
           <CarouselImage carouselItem={carouselItems[0]} priority />
         </Box>
       )}
       {!firstRender && (
         <Carousel
-          onChange={onChange}
+          onChange={() => {
+            onChange;
+            setFirstRender(false);
+          }}
           indicators={true}
           sx={{ mr: -2, ml: -2 }}
           indicatorContainerProps={indicatorContainerProps}
