@@ -57,10 +57,6 @@ export default function GalleryPage() {
     setDialogPicture(emptyImageValue);
   }
 
-  if (!router.query.season) {
-    return null;
-  }
-
   return (
     <Layout>
       <Container maxWidth="lg" sx={{ mt: 2, mb: 0.5 }}>
@@ -69,33 +65,37 @@ export default function GalleryPage() {
           selectedSeason={selectedSeason}
         />
       </Container>
-      <Grid container spacing={0.5} mb={0.5}>
-        {imageBank[selectedSeason].map((image) => {
-          return (
-            <Grid key={image.src} item sm={6} md={4} lg={3}>
-              <Box
-                sx={{
-                  overflow: "hidden",
-                }}
-              >
-                <StyledImage
-                  src={image.src}
-                  alt={selectedSeason}
-                  width={4032}
-                  height={2268}
-                  onClick={() => openPictureDialog(image)}
-                  sizes="
-                  (max-width: 600px) 100vw,
-                  (max-width: 900px) 50vw,
-                  (max-width: 1200px) 33vw,
+      {router.query.season && (
+        <Grid container spacing={0.5} mb={0.5}>
+          {imageBank[selectedSeason].map((image, index) => {
+            return (
+              <Grid key={image.src} item xs={12} sm={6} md={4} lg={3}>
+                <Box
+                  sx={{
+                    overflow: "hidden",
+                  }}
+                >
+                  <StyledImage
+                    priority={index === 0 || index === 1 || index === 2}
+                    layout="responsive"
+                    src={image.src}
+                    alt={selectedSeason}
+                    width={4032}
+                    height={2268}
+                    onClick={() => openPictureDialog(image)}
+                    sizes="
+                  (max-width: 599px) 100vw,
+                  (max-width: 899px) 50vw,
+                  (max-width: 1199px) 33vw,
                   25vw      
                   "
-                />
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
+                  />
+                </Box>
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
       {dialogPicture.id !== 0 && (
         <ImageDialog
           open={dialogPicture.id !== 0}
