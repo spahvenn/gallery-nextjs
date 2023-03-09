@@ -102,6 +102,10 @@ export function MobileCarouselContainer({
 }: CarouselContainerProps) {
   const [firstRender, setFirstRender] = useState(true);
 
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
   return (
     <Box>
       {firstRender && (
@@ -112,10 +116,7 @@ export function MobileCarouselContainer({
       )}
       {!firstRender && (
         <Carousel
-          onChange={() => {
-            onChange;
-            setFirstRender(false);
-          }}
+          onChange={onChange}
           indicators={true}
           sx={{ mr: -2, ml: -2 }}
           indicatorContainerProps={indicatorContainerProps}
