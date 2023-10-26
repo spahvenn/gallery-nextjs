@@ -26,7 +26,7 @@ export default function GalleryPage() {
 
   useEffect(() => {
     const urlSeason = router.query.season;
-    if (urlSeason && urlSeason !== null) {
+    if (urlSeason) {
       setSelectedSeason(urlSeason as string);
     }
 

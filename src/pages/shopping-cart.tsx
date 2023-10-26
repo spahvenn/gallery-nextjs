@@ -1,12 +1,12 @@
-import { Button, Grid, Link, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
-import * as RouterLink from "next/link";
 import ImageDialog from "../components/GalleryPage/ImageDialog";
 import { BasicLayout } from "../components/Layout/Layout";
 import { showInfoMsg } from "../utils/toast";
-import { emptyImageValue, getImageById } from "../utils/utils";
+import { emptyImageValue } from "../utils/utils";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import Image from "next/image";
+import EmptyShoppingCartInformation from "@/src/components/ShoppingCartPage/EmptyShoppingCartInformation";
+import ShoppingCartItems from "@/src/components/ShoppingCartPage/ShoppingCartItems";
 
 const ShoppingCartPage = () => {
   const { itemIds } = useShoppingCart();
@@ -19,42 +19,13 @@ const ShoppingCartPage = () => {
             Shopping Cart
           </Typography>
         </Grid>
-        {itemIds.length === 0 && (
-          <Grid item xs={12}>
-            <Typography gutterBottom>Your shopping cart is empty.</Typography>
-            <Typography>
-              Please browse the {/* @ts-ignore*/}
-              <Link component={RouterLink} href="/gallery?season=all">
-                gallery
-              </Link>{" "}
-              to add items to your shopping cart.
-            </Typography>
-          </Grid>
-        )}
+        {itemIds.length === 0 && <EmptyShoppingCartInformation />}
         {itemIds.length > 0 && (
           <>
-            <Grid container spacing={0.5} mb={2}>
-              {itemIds.map((itemId) => {
-                return (
-                  <Grid key={itemId} item xs={6} sm={4} md={3}>
-                    <Image
-                      src={getImageById(itemId).src}
-                      alt={"Shopping cart item"}
-                      width={4032}
-                      height={2268}
-                      onClick={() => setDialogPicture(getImageById(itemId))}
-                      sizes="282px"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "block",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </Grid>
-                );
-              })}
-            </Grid>
+            <ShoppingCartItems
+              itemIds={itemIds}
+              setDialogPicture={setDialogPicture}
+            />
             <Grid container>
               <Grid item xs={12}>
                 <Typography mb={2} fontSize="1.25rem">
