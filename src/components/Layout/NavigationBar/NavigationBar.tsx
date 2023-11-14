@@ -7,7 +7,7 @@ import ShoppingCartNavItem from "./ShoppingCartNavItem";
 
 export default function NavigationBar() {
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" component="nav">
       <Container maxWidth="lg">
         <Grid container>
           <Grid item xs={12}>

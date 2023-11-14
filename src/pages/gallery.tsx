@@ -71,9 +71,17 @@ export default function GalleryPage() {
             return (
               <Grid key={image.src} item xs={12} sm={6} md={4} lg={3}>
                 <Box
-                  sx={{
+                  tabIndex={0}
+                  onClick={() => openPictureDialog(image)}
+                  onKeyDown={(event) =>
+                    event.key === "Enter" ? openPictureDialog(image) : null
+                  }
+                  sx={(theme) => ({
                     overflow: "hidden",
-                  }}
+                    ":focus": {
+                      outline: `${theme.palette.primary.main} solid 3px`,
+                    },
+                  })}
                 >
                   <StyledImage
                     priority={index === 0 || index === 1 || index === 2}
@@ -82,7 +90,6 @@ export default function GalleryPage() {
                     alt={selectedSeason}
                     width={4032}
                     height={2268}
-                    onClick={() => openPictureDialog(image)}
                     sizes="
                   (max-width: 599px) 100vw,
                   (max-width: 899px) 50vw,
